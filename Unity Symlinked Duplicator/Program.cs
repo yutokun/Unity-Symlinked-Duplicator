@@ -12,16 +12,23 @@ internal static class Program
     {
         if (args.Length == 0)
         {
-            Console.WriteLine("Drop Unity Project Folder to this app.");
+            Console.WriteLine("Drop an Unity Project Folder to this app.");
+            Console.ReadKey();
+            return;
+        }
+
+        original = args[0];
+
+        if (!Directory.Exists(Path.Combine(original, "Assets")) || !Directory.Exists(Path.Combine(original, "ProjectSettings")))
+        {
+            Console.WriteLine("This is not an Unity Project.");
             Console.ReadKey();
             return;
         }
 
         if (!IsAdmin) RunAsAdmin(args);
 
-        original = args[0];
         duplicated = $"{original} Duplicated";
-
         Directory.CreateDirectory(duplicated);
         Link("Assets");
         Link("Library");
