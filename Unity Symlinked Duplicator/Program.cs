@@ -6,7 +6,7 @@ namespace UnitySymlinkedDuplicator;
 
 internal static class Program
 {
-    static string? original, duplicated;
+    static string? original, symlinked;
 
     static void Main(string[] args)
     {
@@ -32,8 +32,8 @@ internal static class Program
             return;
         }
 
-        duplicated = $"{original} Duplicated";
-        Directory.CreateDirectory(duplicated);
+        symlinked = $"{original} Symlinked";
+        Directory.CreateDirectory(symlinked);
         Link("Assets");
         Link("Library");
         Link("ProjectSettings");
@@ -45,7 +45,7 @@ internal static class Program
 
     static void Link(string directory)
     {
-        var path = Path.Combine(duplicated!, directory);
+        var path = Path.Combine(symlinked!, directory);
         var target = Path.Combine(original!, directory);
         if (!Directory.Exists(target)) return;
         try

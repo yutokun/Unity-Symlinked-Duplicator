@@ -8,6 +8,6 @@ Windows
 
 ## 使い方
 
-Unity プロジェクトのフォルダを本アプリにドロップすると、`フォルダ名 Duplicated` というフォルダを作成し、Assets、Project Settings、Packages、Library のシンボリック・リンクを作成します。
+Unity プロジェクトのフォルダを本アプリにドロップすると、`フォルダ名 Symlinked` というフォルダを作成し、Assets、Project Settings、Packages、Library のシンボリック・リンクを作成します。
 
 起動する Unity 間でプラットフォームが異なる場合は、Library を分けた方が無難かもしれません。
