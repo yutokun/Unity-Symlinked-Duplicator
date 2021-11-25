@@ -48,7 +48,16 @@ internal static class Program
         var path = Path.Combine(duplicated!, directory);
         var target = Path.Combine(original!, directory);
         if (!Directory.Exists(target)) return;
-        Directory.CreateSymbolicLink(path, target);
+        try
+        {
+            Directory.CreateSymbolicLink(path, target);
+        }
+        catch (IOException e)
+        {
+            Console.WriteLine(e.Message);
+            Console.ReadKey();
+            throw;
+        }
     }
 
     static bool IsAdmin
@@ -75,8 +84,8 @@ internal static class Program
         }
         catch (Win32Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            Console.WriteLine("Could not get administrator privileges.");
+            Console.ReadKey();
         }
     }
 }
