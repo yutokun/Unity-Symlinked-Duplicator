@@ -1,0 +1,31 @@
+name: .NET
+
+on:
+  push:
+    tags: '**'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet publish -c Release -r win-x64 /p:PublishSingleFile=true /p:DebugType=None --self-contained false
+
+    - uses: softprops/action-gh-release@v0.1.5
+      with:
+        draft: true
+        prerelease: false
+        files: /home/runner/work/Unity-Symlinked-Duplicator/Unity-Symlinked-Duplicator/Unity Symlinked Duplicator/bin/Release/net6.0/win-x64/publish/Unity Symlinked Duplicator.exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
