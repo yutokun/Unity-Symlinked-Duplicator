@@ -34,6 +34,9 @@ internal static class Program
         Link("Library");
         Link("ProjectSettings");
         Link("Packages");
+
+        Console.WriteLine("Symlinked project has been created.");
+        Console.ReadKey();
     }
 
     static void Link(string directory)
