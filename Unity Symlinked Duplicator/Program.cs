@@ -26,7 +26,11 @@ internal static class Program
             return;
         }
 
-        if (!IsAdmin) RunAsAdmin(args);
+        if (!IsAdmin)
+        {
+            RunAsAdmin(args);
+            return;
+        }
 
         duplicated = $"{original} Duplicated";
         Directory.CreateDirectory(duplicated);
