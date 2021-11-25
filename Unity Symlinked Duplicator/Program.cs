@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
 using System.Security.Principal;
 
 namespace UnitySymlinkedDuplicator;
@@ -10,6 +11,9 @@ internal static class Program
 
     static void Main(string[] args)
     {
+        Console.WriteLine($"Unity Symlinked Duplicator v{Assembly.GetEntryAssembly().GetName().Version.ToString(3)}");
+        Console.WriteLine("");
+
         if (args.Length == 0)
         {
             Console.WriteLine("Drop an Unity Project Folder to this app.");
