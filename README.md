@@ -4,7 +4,8 @@
 
 ## 動作環境
 
-Windows
+- Windows 10
+- [.NET Destop Runtime 6.0.0](https://dotnet.microsoft.com/download/dotnet/6.0)
 
 ## 使い方
 
