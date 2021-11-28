@@ -15,7 +15,7 @@ internal static class Program
 
         if (args.Length == 0)
         {
-            Console.WriteLine("Drop an Unity Project Folder to this app.");
+            Console.WriteLine("Drop your Unity project folders to this app.");
             Console.ReadKey();
             return;
         }
