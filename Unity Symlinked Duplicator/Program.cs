@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Security.Principal;
+using System.Text.RegularExpressions;
 
 namespace UnitySymlinkedDuplicator;
 
@@ -37,6 +38,20 @@ internal static class Program
             }
 
             var symlinked = $"{path} Symlinked";
+            if (Directory.Exists(symlinked))
+            {
+                var directories = Directory.GetDirectories(Directory.GetParent(symlinked).FullName);
+                var maxNumber = directories
+                                .Where(d => d.Contains(symlinked))
+                                .Select(d =>
+                                {
+                                    var number = Regex.Match(d, @"[0-9]+").Groups[0];
+                                    return int.Parse(number.Success ? number.Value : "0");
+                                })
+                                .Max();
+                symlinked = $"{symlinked} {maxNumber + 1}";
+            }
+
             Directory.CreateDirectory(symlinked);
             Link(path, symlinked, "Assets");
             Link(path, symlinked, "Library");
