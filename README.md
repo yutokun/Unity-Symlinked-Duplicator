@@ -14,3 +14,7 @@ https://user-images.githubusercontent.com/8219697/143734270-90bd2166-65a4-4102-a
 Unity プロジェクトのフォルダを本アプリにドロップすると、`フォルダ名 Symlinked` というフォルダを作成し、Assets、Project Settings、Packages、Library のシンボリック・リンクを作成します。
 
 起動する Unity 間でプラットフォームが異なる場合は、Library を分けた方が無難かもしれません。
+
+## ライセンス
+
+[The Unlicense](LICENSE)
