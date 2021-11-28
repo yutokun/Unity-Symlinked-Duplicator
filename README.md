@@ -13,9 +13,12 @@ https://user-images.githubusercontent.com/8219697/143734270-90bd2166-65a4-4102-a
 
 ## 使い方
 
-Unity プロジェクトのフォルダを本アプリにドロップすると、`フォルダ名 Symlinked` というフォルダを作成し、Assets、Project Settings、Packages、Library のシンボリック・リンクを作成します。
+1. Unity プロジェクトのフォルダを本アプリにドロップします。
+2. シンボリック・リンク作成のための管理者権限を許可します。
 
-起動する Unity 間でプラットフォームが異なる場合は、Library を分けた方が無難かもしれません。
+`フォルダ名 Symlinked` というフォルダと、Assets、Project Settings、Packages、Library へのシンボリック・リンクが作成されます。
+
+起動する Unity 間でプラットフォームが異なる場合は、Library を分けた方が安全かもしれません。
 
 ## ライセンス
 
@@ -36,9 +39,12 @@ https://user-images.githubusercontent.com/8219697/143734270-90bd2166-65a4-4102-a
 
 ## Usage
 
-If you drop a folder of your Unity project into this app, it will create a folder named `Folder name Symlinked` and create symbolic links for Assets, Project Settings, Packages, and Library.
+1. Drop folders of the Unity project into this application.
+2. Allow administrator privileges for symbolic link creation.
 
-If you are running Unity(s) on different platforms, it may be safer to exclude the Libraries.
+The app will create a folder named `Folder Name Symlinked` and symbolic links to Assets, Project Settings, Packages, and Library.
+
+If you will running Unity(s) on different platforms, it may be safer to exclude the Libraries.
 
 ## License
 
