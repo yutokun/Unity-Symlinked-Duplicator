@@ -21,7 +21,7 @@ internal static class Program
             return;
         }
 
-        original = args[0];
+        original = args.Aggregate((result, next) => $"{result} {next}");
 
         if (!Directory.Exists(Path.Combine(original, "Assets")) || !Directory.Exists(Path.Combine(original, "ProjectSettings")))
         {
