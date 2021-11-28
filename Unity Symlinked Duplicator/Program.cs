@@ -7,8 +7,6 @@ namespace UnitySymlinkedDuplicator;
 
 internal static class Program
 {
-    static string? original, symlinked;
-
     static void Main(string[] args)
     {
         Console.WriteLine($"Unity Symlinked Duplicator v{Assembly.GetEntryAssembly().GetName().Version.ToString(3)}");
@@ -21,36 +19,68 @@ internal static class Program
             return;
         }
 
-        original = args.Aggregate((result, next) => $"{result} {next}");
+        var combinedArgument = args.Aggregate((result, next) => $"{result} {next}");
+        var paths = ExtractPaths(combinedArgument);
 
-        if (!Directory.Exists(Path.Combine(original, "Assets")) || !Directory.Exists(Path.Combine(original, "ProjectSettings")))
+        foreach (var path in paths)
         {
-            Console.WriteLine("This is not an Unity Project.");
-            Console.ReadKey();
-            return;
+            if (!Directory.Exists(Path.Combine(path, "Assets")) || !Directory.Exists(Path.Combine(path, "ProjectSettings")))
+            {
+                Console.WriteLine($"Not an Unity Project: {path}");
+                continue;
+            }
+
+            if (!IsAdmin)
+            {
+                RunAsAdmin(combinedArgument);
+                return;
+            }
+
+            var symlinked = $"{path} Symlinked";
+            Directory.CreateDirectory(symlinked);
+            Link(path, symlinked, "Assets");
+            Link(path, symlinked, "Library");
+            Link(path, symlinked, "ProjectSettings");
+            Link(path, symlinked, "Packages");
+
+            Console.WriteLine($"Symlinked: {symlinked}");
         }
 
-        if (!IsAdmin)
-        {
-            RunAsAdmin(args);
-            return;
-        }
-
-        symlinked = $"{original} Symlinked";
-        Directory.CreateDirectory(symlinked);
-        Link("Assets");
-        Link("Library");
-        Link("ProjectSettings");
-        Link("Packages");
-
-        Console.WriteLine("Symlinked project has been created.");
+        Console.WriteLine();
+        Console.WriteLine("Press any key to finish...");
         Console.ReadKey();
     }
 
-    static void Link(string directory)
+    static List<string> ExtractPaths(string original)
     {
-        var path = Path.Combine(symlinked!, directory);
-        var target = Path.Combine(original!, directory);
+        var pathStarts = new List<int>();
+        while (true)
+        {
+            var searchStartAt = pathStarts.Count == 0 ? 0 : pathStarts.Last() + 2;
+            var startsAt = original.IndexOf(":", searchStartAt) - 1;
+            if (startsAt == -2)
+            {
+                pathStarts.Add(original.Length + 1);
+                break;
+            }
+
+            pathStarts.Add(startsAt);
+        }
+
+        var paths = new List<string>();
+        for (var i = 0; i < pathStarts.Count - 1; i++)
+        {
+            var length = pathStarts[i + 1] - pathStarts[i] - 1;
+            paths.Add(original.Substring(pathStarts[i], length));
+        }
+
+        return paths;
+    }
+
+    static void Link(string original, string symlinked, string directory)
+    {
+        var path = Path.Combine(symlinked, directory);
+        var target = Path.Combine(original, directory);
         if (!Directory.Exists(target)) return;
         try
         {
@@ -73,10 +103,10 @@ internal static class Program
         }
     }
 
-    static void RunAsAdmin(string[] args)
+    static void RunAsAdmin(string argument)
     {
         var exe = Environment.GetCommandLineArgs()[0].Replace(".dll", ".exe");
-        var startInfo = new ProcessStartInfo(exe, args[0])
+        var startInfo = new ProcessStartInfo(exe, argument)
         {
             UseShellExecute = true,
             Verb = "runas"
