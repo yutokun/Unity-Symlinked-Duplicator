@@ -54,7 +54,6 @@ internal static class Program
 
             Directory.CreateDirectory(symlinked);
             Link(path, symlinked, "Assets");
-            Link(path, symlinked, "Library");
             Link(path, symlinked, "ProjectSettings");
             Link(path, symlinked, "Packages");
 
