@@ -130,7 +130,7 @@ internal static class Program
         {
             Process.Start(startInfo);
         }
-        catch (Win32Exception e)
+        catch (Win32Exception)
         {
             Console.WriteLine("Could not get administrator privileges.");
             Console.ReadKey();
