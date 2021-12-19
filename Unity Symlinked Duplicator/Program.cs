@@ -1,8 +1,11 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.Versioning;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
+
+[assembly: SupportedOSPlatform("windows")]
 
 namespace UnitySymlinkedDuplicator;
 
@@ -10,7 +13,7 @@ internal static class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine($"Unity Symlinked Duplicator v{Assembly.GetEntryAssembly().GetName().Version.ToString(3)}");
+        Console.WriteLine($"Unity Symlinked Duplicator v{Assembly.GetEntryAssembly()!.GetName().Version!.ToString(3)}");
         Console.WriteLine("");
 
         if (args.Length == 0)
@@ -40,7 +43,7 @@ internal static class Program
             var symlinked = $"{path} Symlinked";
             if (Directory.Exists(symlinked))
             {
-                var directories = Directory.GetDirectories(Directory.GetParent(symlinked).FullName);
+                var directories = Directory.GetDirectories(Directory.GetParent(symlinked)!.FullName);
                 var maxNumber = directories
                                 .Where(d => d.Contains(symlinked))
                                 .Select(d =>
